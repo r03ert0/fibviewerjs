@@ -1,0 +1,52 @@
+<script type="x-shader/x-vertex" id="vertexshader">
+    attribute vec3 customColor;
+    varying vec3 vColor;
+    void main() {
+        vColor = customColor;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+    }
+</script>
+<script type="x-shader/x-fragment" id="fragmentshader">
+    uniform vec3 color;
+    uniform float opacity;
+    varying vec3 vColor;
+    void main() {
+        gl_FragColor = vec4( vColor, 1.0); // opacity );
+    }
+</script>
+
+<h2>Hi</h2>
+
+<p id='prog'></p>
+
+<button onclick="exportOBJ();">Export OBJ</button>
+
+<script src='https://cdn.jsdelivr.net/gh/mrdoob/three.js@r120/build/three.min.js'></script>
+<script src='https://cdn.jsdelivr.net/gh/mrdoob/three.js@r120/examples/js/controls/TrackballControls.js'></script>
+<script src='https://cdn.rawgit.com/r03ert0/structjs/v0.0.1/struct.js'></script>
+
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r120/examples/js/exporters/PLYExporter.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r120/examples/js/exporters/OBJExporter.js"></script>
+
+<script src='tract.js'></script>
+<script src='tractviewer.js'></script>
+<script>
+init();
+
+const exportOBJ = () => {
+    const exporter = new THREE.OBJExporter();
+    // const exporter = new THREE.PLYExporter();
+    const options = {binary: false};
+    const data = exporter.parse( scene, ()=>{console.log("done");}, options );
+
+    var textBlob = new Blob([data], {type:"text/plain;charset=utf-8"});
+    var textUrl = URL.createObjectURL(textBlob);
+    var downloadLink = document.createElement("a");
+    downloadLink.href = textUrl;
+    // downloadLink.download = "fibres.ply";
+    downloadLink.download = "fibres.obj";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+}
+</script>

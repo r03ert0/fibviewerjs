@@ -1,0 +1,14 @@
+{
+  "name": "fibre_continuum",
+  "version": "1.0.0",
+  "description": "",
+  "main": "load_trk.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Roberto Toro <rto@braincatalogue.org> (http://neuroanatomy.github.io)",
+  "license": "ISC",
+  "dependencies": {
+    "struct": "0.0.12"
+  }
+}
